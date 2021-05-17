@@ -101,6 +101,7 @@ export default {
     },
     deleteTask(id) {
       let index = this.tasks.findIndex(task => task.id === id)
+      db.collection('tasks').doc({ id: id }).delete()
       this.tasks.splice(index, 1)
     },
     getTasks() {
