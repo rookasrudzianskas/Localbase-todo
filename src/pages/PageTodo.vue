@@ -88,22 +88,34 @@ export default {
         name: this.newTask,
         done: false
       }
+      db.collection('tasks').add(newTask)
       this.tasks.push(newTask)
       this.newTask = ''
     },
     toggleDone(id) {
       let task = this.tasks.find(task => task.id === id)
+      db.collection('tasks').doc({ id: id }).update({
+        done: !task.done
+      })
       task.done = !task.done
     },
     deleteTask(id) {
       let index = this.tasks.findIndex(task => task.id === id)
       this.tasks.splice(index, 1)
+    },
+    getTasks() {
+      db.collection('tasks').get().then(tasks => {
+        this.tasks = tasks
+      })
     }
   },
   filters: {
     niceDate(value) {
       return date.formatDate(value, 'MMM Do h:ssA')
     }
+  },
+  created() {
+    this.getTasks()
   }
 }
 </script>
