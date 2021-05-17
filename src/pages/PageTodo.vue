@@ -16,7 +16,7 @@
         />
       </template>
     </q-input>
-    
+
     <q-list separator>
       <q-item
         v-for="task in tasks"
@@ -63,6 +63,9 @@
 
 <script>
 import { date } from 'quasar'
+import Localbase from 'localbase'
+
+let db = new Localbase('db')
 
 export default {
   name: 'PageTodo',
